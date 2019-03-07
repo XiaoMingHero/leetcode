@@ -1,0 +1,2 @@
+# leetcode
+make code fun
