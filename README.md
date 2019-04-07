@@ -1,2 +1,2 @@
 # leetcode
-make code fun
+make code fun yes!
