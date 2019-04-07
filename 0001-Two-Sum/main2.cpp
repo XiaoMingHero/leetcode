@@ -4,27 +4,33 @@
 
 #include <iostream>
 #include <vector>
-#include <cmath>
+#include <unordered_map>
 
 using namespace std;
 void printVec(const vector<int>& twoSum);
 
 
 /**
- *  brute force
- *  time O(n^2)
- *  space O(1)
+ *  hash table
+ *  time O(n)
+ *  space O(n)
  */
 
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        for (int i = 0; i < nums.size(); ++i)
-            for (int j = i + 1; j < nums.size(); ++j)
-                if (nums[i] + nums[j] == target) {
-                    int res[] = {i, j};
-                    return vector<int>(res, res + 2);
-                }
+        unordered_map<int, int> record;
+        for (int i = 0; i < nums.size(); ++i) {
+            record[nums[i]] = i;
+        }
+
+        for (int i = 0; i < nums.size(); ++i) {
+            unordered_map<int, int>::iterator iter = record.find(target - nums[i]);
+            if (iter != record.end() && i != iter->second) {
+                int res[] = {i, iter->second};
+                return vector<int>(res, res + 2);
+            }
+        }
 
         printf("has no result \n");
     }
@@ -36,7 +42,7 @@ void printVec(const vector<int>& twoSum) {
     cout << endl;
 }
 
-int main1() {
+int main() {
 
     const int nums[] = {0, 3, 4, 0};
     std::vector<int> num_vec(nums, nums + sizeof(nums));
