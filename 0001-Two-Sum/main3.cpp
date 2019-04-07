@@ -11,7 +11,7 @@ void printVec(const vector<int>& twoSum);
 
 
 /**
- *  hash table (两次for循环)
+ *  hash table (一次for循环)
  *  time O(n)
  *  space O(n)
  */
@@ -21,15 +21,13 @@ public:
     vector<int> twoSum(vector<int>& nums, int target) {
         unordered_map<int, int> record;
         for (int i = 0; i < nums.size(); ++i) {
-            record[nums[i]] = i;
-        }
 
-        for (int i = 0; i < nums.size(); ++i) {
-            unordered_map<int, int>::iterator iter = record.find(target - nums[i]);
-            if (iter != record.end() && i != iter->second) {
-                int res[] = {i, iter->second};
+            int result = target - nums[i];
+            if (record.find(result) != record.end()) {
+                int res[] = {i, record[result]};
                 return vector<int>(res, res + 2);
             }
+            record[nums[i]] = i;
         }
 
         printf("has no result \n");
