@@ -28,17 +28,36 @@ Explanation: The answer is "wke", with the length of 3.
 #include <vector>
 #include <cassert>
 
-using namespace std;
-
+// Sliding Window
+// Time Complexity: O(len(s))
+// Space Complexity: O(len(charset))
 class Solution {
 public:
-    int lengthOfLongestSubstring(string s) {
-            
+    int lengthOfLongestSubstring(std::string s) {
+        int freq[256] = {0};
+        int l = 0, r = -1; // slide windows: s[l,r]
+        int res = 0;
+        
+        while(r + 1 < s.size()) {
+            if (freq[s[r+1]] == 0) {
+                freq[s[++r]]++;
+            } else {
+                freq[s[l++]]--;
+            }
+
+            res = std::max(res, r - l + 1);
+        }
+        return res;
     }
 };
 
 
 
 int main() {
+    std::cout << Solution().lengthOfLongestSubstring( "abcabcbb" )<<std::endl; //3
+    std::cout << Solution().lengthOfLongestSubstring( "bbbbb" )<<std::endl;    //1
+    std::cout << Solution().lengthOfLongestSubstring( "pwwkew" )<<std::endl;   //3
+    std::cout << Solution().lengthOfLongestSubstring( "c" )<<std::endl;        //1
+    std::cout << Solution().lengthOfLongestSubstring( "" )<<std::endl;         //0
     return 0;
 }
